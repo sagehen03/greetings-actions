@@ -12,6 +12,8 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch:
+
 
 permissions:
   contents: read
@@ -48,14 +50,14 @@ jobs:
     - shell: bash
       run: java -jar greetings-actions.jar ${{ github.event.inputs.myValues }}
 
-count-args:
-  runs-on: ubuntu-latest
-  steps:
-    - id: report-count
-      uses: doodad/arg-count-action@main
-      with:
-        arguments-to-count: ${{ github.event.inputs.myValues }}
-    - run: echo
-    - shell: bash
-      run: |
-        echo argument count is ${{ steps.report-count.outputs.arg-count }}
+  count-args:
+    runs-on: ubuntu-latest
+    steps:
+      - id: report-count
+        uses: sagehen03/arg-count-action@main
+        with:
+          arguments-to-count: ${{ github.event.inputs.myValues }}
+      - run: echo
+      - shell: bash
+        run: |
+          echo argument count is ${{ steps.report-count.outputs.arg-count }}
